@@ -132,4 +132,5 @@ dmypy.json
 .idea/
 2pre_commit.py
 3dernier_test.py
-image
+image.py
+books_to_scrape/
