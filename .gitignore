@@ -130,4 +130,6 @@ dmypy.json
 
 # pycharm et test
 .idea/
-code_test.py
+2pre_commit.py
+3dernier_test.py
+image
