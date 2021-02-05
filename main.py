@@ -1,9 +1,31 @@
 # -*- coding: utf-8 -*-
 
-import requests
-import csv
 from bs4 import BeautifulSoup
+import csv
+import requests
+import os
+from pathlib import Path
+import shutil
 
+# Créer un dossier pour les futurs csv et supprime l'ancien :
+
+def creatdirect():
+
+    if os.path.exists('books_to_scrape'):
+        shutil.rmtree('books_to_scrape')
+        os.mkdir('books_to_scrape')
+    else:
+        os.mkdir('books_to_scrape')
+
+# Retourne adresse dossier pour redirection des futurs csv :
+
+def locdirect():
+    midloc = Path().absolute()
+    midloc = str(Path().absolute())
+    loca = midloc + '/books_to_scrape/'
+    return loca
+
+loc = locdirect()
 # Création d'une list des urls des catégories et scrapping nom catégories :
 
 def exturlcat():
@@ -24,9 +46,9 @@ urlcatlistvar = exturlcat()
 
 # Création d'un fichier csv vide par catégorie :
 
-def createcsv(category):
+def createcsv(loc, category):
 
-        with open(category + '_bts.csv', 'a', newline='') as new_file:
+        with open(loc + category + '_bts.csv', 'a', newline='', encoding='utf-8') as new_file:
             fieldnames = ['product_page_url', 'upc', 'title', 'price_including_tax', 'price_excluding_tax',
                           'number_available', 'product_description', 'review_rating', 'image_url']
             writer = csv.DictWriter(new_file, fieldnames=fieldnames)
@@ -52,15 +74,15 @@ def search(soup, url):
 
 # Fonction pour écrire informations voulues dans fichier csv nommé comme catégorie :
 
-def writecsv(product_page_url, upc, title, price_including_tax, price_excluding_tax, number_available,
+def writecsv(loc, product_page_url, upc, title, price_including_tax, price_excluding_tax, number_available,
              product_description, category, review_rating, image_url):
 
-        with open(category + '_bts.csv', 'r') as csv_file:
+        with open(loc + category + '_bts.csv', 'r', encoding='utf-8') as csv_file:
             reader = csv.reader(csv_file)
             for header in reader:
                 break
 
-        with open(category + '_bts.csv', 'a', newline='') as csv_file:
+        with open(loc + category + '_bts.csv', 'a', newline='', encoding='utf-8') as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=header)
             writer.writerow({'product_page_url': product_page_url, 'upc': upc, 'title': title,
                                  'price_including_tax': price_including_tax, 'price_excluding_tax': price_excluding_tax,
@@ -93,11 +115,11 @@ def listurlbooks():
                 k = str(j)
                 url = urlcategory + 'page-' + k + '.html'
                 r = requests.get(url)
+                # Il faut ici création fichier csv avec fieldname donc avoir category
             for elements in listurlbooks:
                 url = elements
                 r = requests.get(url)
                 soup = BeautifulSoup(r.text, 'xml')
-                search(soup, url)
                 product_page_url = search(soup, url)[0]
                 upc = search(soup, url)[1]
                 title = search(soup, url)[2]
@@ -108,8 +130,8 @@ def listurlbooks():
                 category = search(soup, url)[7]
                 review_rating = search(soup, url)[8]
                 image_url = search(soup, url)[9]
-                createcsv(category)
-                writecsv(product_page_url, upc, title, price_including_tax, price_excluding_tax, number_available,
+                createcsv(loc, category)
+                writecsv(loc, product_page_url, upc, title, price_including_tax, price_excluding_tax, number_available,
                          product_description, category, review_rating, image_url)
         else:
             listurlbooks = []
@@ -126,7 +148,6 @@ def listurlbooks():
                 url = elements
                 r = requests.get(url)
                 soup = BeautifulSoup(r.text, 'xml')
-                search(soup, url)
                 product_page_url = search(soup, url)[0]
                 upc = search(soup, url)[1]
                 title = search(soup, url)[2]
@@ -137,16 +158,16 @@ def listurlbooks():
                 category = search(soup, url)[7]
                 review_rating = search(soup, url)[8]
                 image_url = search(soup, url)[9]
-                createcsv(category)
-                writecsv(product_page_url, upc, title, price_including_tax, price_excluding_tax, number_available,
+                createcsv(loc, category)
+                writecsv(loc, product_page_url, upc, title, price_including_tax, price_excluding_tax, number_available,
                          product_description, category, review_rating, image_url)
 
 
 def main():
-
+    creatdirect()
+    locdirect()
     exturlcat()
     listurlbooks()
-
 
 main()
 
