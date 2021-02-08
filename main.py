@@ -40,7 +40,7 @@ loc = locdirect()[0]
 loc2 = locdirect()[1]
 
 
-# Création d'une list des urls des catégories et scrapping nom catégories comme référence nom des .csv :
+# Création d'une list des urls des catégories et scraping nom catégories comme référence nom des .csv :
 
 
 def exturlcat():
@@ -60,7 +60,7 @@ def exturlcat():
 urlcatlistvar = exturlcat()
 
 
-# Création d'un fichier csv vide par catégorie avec les fieldnames des informations à scrapper :
+# Création d'un fichier csv vide par catégorie avec les fieldnames des informations à scraper :
 
 def createcsv(loc, category):
     with open(loc + category + '_bts.csv', 'a', newline='', encoding='latin-1') as new_file:
@@ -70,7 +70,7 @@ def createcsv(loc, category):
         writer.writeheader()
 
 
-# Fonction pour scrapper les informations voulues  :
+# Fonction pour scraper les informations voulues  :
 
 def search(soup, url):
     product_page_url = url
