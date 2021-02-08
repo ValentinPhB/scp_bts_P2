@@ -128,6 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+
 # pycharm et test
 .idea/
 2pre_commit.py
@@ -135,3 +136,4 @@ dmypy.json
 image.py
 books_to_scrape/
 images_books_to_scrape/
+
