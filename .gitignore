@@ -134,3 +134,4 @@ dmypy.json
 3dernier_test.py
 image.py
 books_to_scrape/
+images_books_to_scrape/
