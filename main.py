@@ -12,7 +12,7 @@ def create_directories():
     """
     Description: This function create two directories ("books_to_scrape" for .csv and "images_books_to_scrape"
     for images).It also delete older versions of this directories.
-    :return: locate_csvfc and locate_imagesfc. They are respectively captured in locate_csv and locate_images variables.
+    :return: locate_csvfc and locate_imagesfc.They are captured in locate_csv and locate_images variables respectively .
     """
     if os.path.exists('books_to_scrape'):
         shutil.rmtree('books_to_scrape')
