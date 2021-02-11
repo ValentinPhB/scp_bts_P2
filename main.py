@@ -1,78 +1,86 @@
-
+#!/usr/bin/env python
 
 from bs4 import BeautifulSoup
 import csv
 import requests
 import os
-from pathlib import Path
 import shutil
 import wget
 
 
-# Créer un dossier pour les futurs csv, et fichiers images. Il supprime les anciens si existant :
-
-
-def creatdirect():
+def create_directories():
+    """
+    Description: This function create two directories ("books_to_scrape" for .csv and "images_books_to_scrape"
+    for images).It also delete older versions of this directories.
+    :return: locate_csvfc and locate_imagesfc. They are respectively captured in locate_csv and locate_images variables.
+    """
     if os.path.exists('books_to_scrape'):
         shutil.rmtree('books_to_scrape')
         os.mkdir('books_to_scrape')
     else:
         os.mkdir('books_to_scrape')
+    locate_csvfc = os.path.join('.', 'books_to_scrape')
 
     if os.path.exists('images_books_to_scrape'):
         shutil.rmtree('images_books_to_scrape')
         os.mkdir('images_books_to_scrape')
     else:
         os.mkdir('images_books_to_scrape')
+    locate_imagesfc = os.path.join('.', 'images_books_to_scrape')
+
+    return locate_csvfc, locate_imagesfc
 
 
-# Retourne l'adresse des dossiers créés pour la redirection des futures .csv et des fichier images :
-
-def locdirect():
-    midloc = Path().absolute()
-    midloc = str(Path().absolute())
-    loca2 = midloc + '/images_books_to_scrape'
-    loca = midloc + '/books_to_scrape/'
-    return loca, loca2
+locate_csv = create_directories()[0]
+locate_images = create_directories()[1]
 
 
-loc = locdirect()[0]
-loc2 = locdirect()[1]
-
-
-# Création d'une list des urls des catégories et scraping nom catégories comme référence nom des .csv :
-
-
-def exturlcat():
+def create_urlcatlist(number_category):
+    """
+    Description: This function create a list of all url's categories from the site "Books to scrape".
+    :param number_category: Is total number of categories + 3.
+    :return: it return list "exturlcatlist" that will be captured in "urlcatlist" variable.
+    """
     url = 'http://books.toscrape.com/index.html'
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'xml')
     i = 3
-    urlcatlist = []
-    while i < 53:
+    exturlcatlist = []
+    while i < number_category:
         midurlcat = soup.select('a')[i]['href'].replace('index.html', '')
-        urlcat = 'http://books.toscrape.com/' + midurlcat
-        urlcatlist.append(urlcat)
+        urlcat = 'http://books.toscrape.com/{}'.format(midurlcat)
+        exturlcatlist.append(urlcat)
         i += 1
-    return urlcatlist
+    return exturlcatlist
 
 
-urlcatlistvar = exturlcat()
+urlcatlist = create_urlcatlist(53)
 
 
-# Création d'un fichier csv vide par catégorie avec les fieldnames des informations à scraper :
-
-def createcsv(loc, category):
-    with open(loc + category + '_bts.csv', 'a', newline='', encoding='latin-1') as new_file:
+def create_csv(loccsv, csvname):
+    """
+    Description: This function create an empty .csv in "books_to_scrape" using "category" as name.
+    It determine also the fieldnames.
+    :param loccsv: Variable locate_csv from creatdirect()
+    :param csvname: Variable csvname from "csvname = soup.select('h1')[0].string" executed just before this function.
+    "csvname" collect the name of the category.
+    """
+    name = os.path.join(loccsv, csvname)
+    with open('{}{}'.format(name, '_bts.csv'), 'a', newline='', encoding='latin-1') as new_file:
         fieldnames = ['product_page_url', 'upc', 'title', 'price_including_tax', 'price_excluding_tax',
                       'number_available', 'product_description', 'review_rating', 'image_url', 'image']
         writer = csv.DictWriter(new_file, fieldnames=fieldnames)
         writer.writeheader()
 
 
-# Fonction pour scraper les informations voulues  :
-
-def search(soup, url):
+def scrap_write(url, loccsv, image, soup):
+    """
+    Description: This function collect all information needed and write it in its .csv in function of categories.
+    :param url: Url of the book is needed.
+    :param loccsv: locate_csv
+    :param image: Variable "image" is collect just before this function is executed.
+    :param soup: "soup" is the parsing answer of r=requests.get(url).
+    """
     product_page_url = url
     title = soup.select("h1")[0].string
     upc = soup.select('table')[0].select('td')[0].string
@@ -84,21 +92,14 @@ def search(soup, url):
     review_rating = soup.select('table')[0].select('td')[6].string
     image_url = (soup.select("img")[0]["src"]).replace('../../', "http://books.toscrape.com/")
     product_description = (soup.select("meta")[2]["content"]).replace('     ', '')
-    return (product_page_url, upc, title, price_including_tax, price_excluding_tax, number_available,
-            product_description, category, review_rating, image_url)
 
-
-# Fonction pour écrire ces informations dans le fichier .csv correspondant à la catégorie du livre  :
-
-
-def writecsv(loc, product_page_url, upc, title, price_including_tax, price_excluding_tax, number_available,
-             product_description, category, review_rating, image_url, image):
-    with open(loc + category + '_bts.csv', 'r', encoding='latin-1') as csv_file:
+    name = os.path.join(loccsv, category)
+    with open('{}{}'.format(name, '_bts.csv'), 'r', encoding='latin-1') as csv_file:
         reader = csv.reader(csv_file)
         for header in reader:
             break
 
-    with open(loc + category + '_bts.csv', 'a', newline='', encoding='latin-1') as csv_file:
+    with open('{}{}'.format(name, '_bts.csv'), 'a', newline='', encoding='latin-1') as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=header)
         writer.writerow({'product_page_url': product_page_url, 'upc': upc, 'title': title,
                          'price_including_tax': price_including_tax, 'price_excluding_tax': price_excluding_tax,
@@ -107,103 +108,76 @@ def writecsv(loc, product_page_url, upc, title, price_including_tax, price_exclu
         csv_file.write("\n")
 
 
-# Création d'une liste des urls des livres de chaque catégorie, + search(), + writecsv() :
-
-
-def listurlbooks():
-    for urlcategory in urlcatlistvar:
+def url_to_csv():
+    """
+    Description: This function will use "urlcatlist" to make a list of url's books named "listurlbooks".
+    "If" is executed if the category has more than one page.
+    "Else" is for others.
+    Then it'll search, for each books of a category, information required and write it on its csv file(scrap_write()).
+    """
+    for urlcategory in urlcatlist:
         j = 1
         k = str(j)
-        url = urlcategory + 'page-' + k + '.html'
+        url = '{}{}{}{}'.format(urlcategory, 'page-', k, '.html')
         r = requests.get(url)
         if r:
             soup = BeautifulSoup(r.text, 'xml')
             csvname = soup.select('h1')[0].string
-            createcsv(loc, csvname)
+            create_csv(locate_csv, csvname)
             listurlbooks = []
             while r:
                 soup = BeautifulSoup(r.text, 'xml')
                 linkbook = soup.select('h3 a')
-                l = 0
-                for elements in linkbook:
-                    urlbook = (soup.select('h3 a')[l]['href']).replace('../../../',
+                tag = len(linkbook)
+                i = 0
+                for x in range(tag):
+                    urlbook = (soup.select('h3 a')[i]['href']).replace('../../../',
                                                                        'http://books.toscrape.com/catalogue/')
                     listurlbooks.append(urlbook)
-                    l += 1
-                k = int(j)
+                    i += 1
                 j += 1
                 k = str(j)
-                url = urlcategory + 'page-' + k + '.html'
+                url = '{}{}{}{}'.format(urlcategory, 'page-', k, '.html')
                 r = requests.get(url)
             for elements in listurlbooks:
                 url = elements
                 r = requests.get(url)
                 soup = BeautifulSoup(r.text, 'xml')
-                product_page_url = search(soup, url)[0]
-                upc = search(soup, url)[1]
-                title = search(soup, url)[2]
-                price_including_tax = search(soup, url)[3]
-                price_excluding_tax = search(soup, url)[4]
-                number_available = search(soup, url)[5]
-                product_description = search(soup, url)[6]
-                category = search(soup, url)[7]
-                review_rating = search(soup, url)[8]
-                image_url = search(soup, url)[9]
-
-                # Sauvegarde de l'image du livre dans le dossier images_books_to_scrape :
-                image = wget.download(image_url, loc2)
-
-                # Enregistrement de toutes les données :
-                writecsv(loc, product_page_url, upc, title, price_including_tax, price_excluding_tax, number_available,
-                         product_description, category, review_rating, image_url, image)
+                image_url = (soup.select("img")[0]["src"]).replace('../../', "http://books.toscrape.com/")
+                image = wget.download(image_url, locate_images)
+                scrap_write(url, locate_csv, image, soup)
 
         else:
             listurlbooks = []
-            url = urlcategory + 'index.html'
+            url = '{}{}'.format(urlcategory, 'index.html')
             r = requests.get(url)
             soup = BeautifulSoup(r.text, 'xml')
             csvname = soup.select('h1')[0].string
-            createcsv(loc, csvname)
+            create_csv(locate_csv, csvname)
             linkbook = soup.select('h3 a')
-            l = 0
-            for elements in linkbook:
-                urlbook = (soup.select('h3 a')[l]['href']).replace('../../../', 'http://books.toscrape.com/catalogue/')
+            tag = len(linkbook)
+            i = 0
+            for x in range(tag):
+                urlbook = (soup.select('h3 a')[i]['href']).replace('../../../', 'http://books.toscrape.com/catalogue/')
                 listurlbooks.append(urlbook)
-                l += 1
+                i += 1
             for elements in listurlbooks:
                 url = elements
                 r = requests.get(url)
                 soup = BeautifulSoup(r.text, 'xml')
-                product_page_url = search(soup, url)[0]
-                upc = search(soup, url)[1]
-                title = search(soup, url)[2]
-                price_including_tax = search(soup, url)[3]
-                price_excluding_tax = search(soup, url)[4]
-                number_available = search(soup, url)[5]
-                product_description = search(soup, url)[6]
-                category = search(soup, url)[7]
-                review_rating = search(soup, url)[8]
-                image_url = search(soup, url)[9]
-
-                # Sauvegarde de l'image du livre et transfert dans le dossier images_books_to_scrape :
-                image = wget.download(image_url, loc2)
-
-                # Enregistrement de toutes les données :
-                writecsv(loc, product_page_url, upc, title, price_including_tax, price_excluding_tax, number_available,
-                         product_description, category, review_rating, image_url, image)
-
-
-# Définition de l'ordre des actions :
+                image_url = (soup.select("img")[0]["src"]).replace('../../', "http://books.toscrape.com/")
+                image = wget.download(image_url, locate_images)
+                scrap_write(url, locate_csv, image, soup)
 
 
 def main():
-    creatdirect()
-    locdirect()
-    exturlcat()
-    listurlbooks()
-
-
-# Execution du scrypt :
+    """
+    Description: This function call all others in the following order; create_directories();
+     create_urlcatlist(number_category) and url_to_csv().
+    """
+    create_directories()
+    create_urlcatlist(53)
+    url_to_csv()
 
 
 main()
