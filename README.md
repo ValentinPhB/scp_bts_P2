@@ -93,23 +93,23 @@ $ ENV\Scripts\python.exe main.py
 
 ## Load Data
 ### With Microsoft Excel
-Open Microsoft Excel
-Go to DATA >> Get External Data >> From Text
-Go to the location of the CSV file, that you want to import.
-Choose Delimited.
-Set the character encoding to 65001: Unicode (UTF-8) from the dropdown list.
-Check My data has headers.
-Click next to display the second step of Text Import Wizard.
-Set the delimiter to a comma.
-Click next to move to the third step.
-Click OK and then Finish.
-Keep the default values inside the Import Data window and click OK.
+* Open Microsoft Excel
+* Go to DATA >> Get External Data >> From Text
+* Go to the location of the CSV file, that you want to import.
+* Choose Delimited.
+* Set the character encoding to 65001: Unicode (UTF-8) from the dropdown list.
+* Check My data has headers.
+* Click next to display the second step of Text Import Wizard.
+* Set the delimiter to a comma.
+* Click next to move to the third step.
+* Click OK and then Finish.
+* Keep the default values inside the Import Data window and click OK.
 
 ### With Google Sheets
-Open Google Sheets
-Choose “File” → “Import” → “Upload” → “Select a file from your computer.”
-Choose your CSV file from your Documents or Desktop folder.
-in the following window, Choose “Import data.”
+* Open Google Sheets
+* Choose “File” → “Import” → “Upload” → “Select a file from your computer.”
+* Choose your CSV file from your Documents or Desktop folder.
+* in the following window, Choose “Import data.”
 
 
 
