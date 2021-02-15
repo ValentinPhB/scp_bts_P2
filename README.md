@@ -4,6 +4,7 @@
 * [Technologies]
 * [Setup for Unix]
 * [Setup for Windows]
+* [Load data]
 
 ## Technologies
 Project is created with:
@@ -76,7 +77,7 @@ $ python3 main.py
 After downloading scp_bts_P2-main.zip from Github, extract it to a location of your choice (exemple : "PATH").
 Or if you use git, clone it from https://github.com/ValentinPhB/scp_bts_P2.git
 
-Then, using terminal and go to "PATH", create a virtual environment and install packages from requirements.txt.
+Then, using cmd, go to "PATH", create a virtual environment and install packages from requirements.txt.
 ```
 $ CD ../path/to/scp_bts_P2
 $ python3 -m venv env
@@ -86,10 +87,30 @@ $ pip install -r requirements.txt
 ```
 
 ### b. Execute main.py for Windows
-If you want better results open main.py with your text editor and go to the end of the script.
-Change 'encode' parameter from main(encode) for 'utf-8'. Then execute it from your terminal.
 ```
 $ ENV\Scripts\python.exe main.py
 ```
+
+## Load Data
+### With Microsoft Excel
+Open Microsoft Excel
+Go to DATA >> Get External Data >> From Text
+Go to the location of the CSV file, that you want to import.
+Choose Delimited.
+Set the character encoding to 65001: Unicode (UTF-8) from the dropdown list.
+Check My data has headers.
+Click next to display the second step of Text Import Wizard.
+Set the delimiter to a comma.
+Click next to move to the third step.
+Click OK and then Finish.
+Keep the default values inside the Import Data window and click OK.
+
+### With Google Sheets
+Open Google Sheets
+Choose “File” → “Import” → “Upload” → “Select a file from your computer.”
+Choose your CSV file from your Documents or Desktop folder.
+in the following window, Choose “Import data.”
+
+
 
 
