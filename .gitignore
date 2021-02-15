@@ -134,6 +134,6 @@ dmypy.json
 2pre_commit.py
 3dernier_test.py
 image.py
-books_to_scrape/
-images_books_to_scrape/
+bts_csv/
+images_bts/
 testdict.py
