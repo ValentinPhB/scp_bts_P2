@@ -1,5 +1,6 @@
 # scraping_bts
 ## Table of contents
+
 * [General info]
 * [Technologies]
 * [Setup for Unix]
@@ -7,6 +8,7 @@
 * [Load data]
 
 ## Technologies
+
 Project is created with Python 3.8.6.
 
 * beautifulsoup4==4.9.3
@@ -28,6 +30,7 @@ Project is created with Python 3.8.6.
 
 
 ## General info 
+
 scraping_bts contain 'main.py', a Python script to collect information from the web site "Books to scrape" (bts).
 
 This scipt, main.py, will create two directories named "bts_csv" and "images_bts" respectively.
@@ -56,6 +59,7 @@ Please see the appropriate guide for your operating System.
 
 
 ## a. Setup for Unix 
+
 After downloading scp_bts_P2-main.zip from Github, extract it to a location of your choice (exemple : "PATH").
 Or if you use git, clone it from https://github.com/ValentinPhB/scp_bts_P2.git
 
@@ -74,6 +78,7 @@ $ python3 main.py
 ```
 
 ## a. Setup for Windows 
+
 After downloading scp_bts_P2-main.zip from Github, extract it to a location of your choice (exemple : "PATH").
 Or if you use git, clone it from https://github.com/ValentinPhB/scp_bts_P2.git
 
@@ -93,19 +98,24 @@ $ ENV\Scripts\python.exe main.py
 
 ## Load Data
 ### With Microsoft Excel
+
 * Open Microsoft Excel
-* Go to DATA >> Get External Data >> From Text
+* Go to NEW >> DATA >> Get External Data >> From Text
 * Go to the location of the CSV file, that you want to import.
 * Choose Delimited.
 * Set the character encoding to 65001: Unicode (UTF-8) from the dropdown list.
 * Check My data has headers.
 * Click next to display the second step of Text Import Wizard.
-* Set the delimiter to a comma.
+
+* Set the delimiter to a comma only.
 * Click next to move to the third step.
+
 * Click OK and then Finish.
+
 * Keep the default values inside the Import Data window and click OK.
 
 ### With Google Sheets
+
 * Open Google Sheets
 * Choose “File” → “Import” → “Upload” → “Select a file from your computer.”
 * Choose your CSV file from your Documents or Desktop folder.
