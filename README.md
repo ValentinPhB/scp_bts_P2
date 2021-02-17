@@ -7,7 +7,7 @@
 * [Load data]
 
 ## Technologies
-Project is created with:
+Project is created with Python 3.8.6.
 
 * beautifulsoup4==4.9.3
 * bs4==0.0.1
@@ -15,8 +15,13 @@ Project is created with:
 * chardet==4.0.0
 * idna==2.10
 * lxml==4.6.2
-* pkg-resources==0.0.0
+* numpy==1.20.1
+* pandas==1.2.2
+* progress==1.5
+* python-dateutil==2.8.1
+* pytz==2021.1
 * requests==2.25.1
+* six==1.15.0
 * soupsieve==2.2
 * urllib3==1.26.3
 * wget==3.2
@@ -28,7 +33,8 @@ scraping_bts contain 'main.py', a Python script to collect information from the 
 This scipt, main.py, will create two directories named "bts_csv" and "images_bts" respectively.
 If those directories already exist, main.py will remove them before recreate new ones.
 
-From "Books to scrape" website url, main.py will create differents csv files for all categories of books and redirect them to "bts_csv".
+From "Books to scrape" website url, main.py will extract all URLs books for a category, transform all information needed and load it in csv files.
+This actions will be executed for all categories of books in "books to scrape". Csv files will be named '"category".csv.' and redirected to "bts_csv".
 It will also download all images and redirect it to "images_bts".
 
 The informations collected are :
@@ -53,13 +59,7 @@ Please see the appropriate guide for your operating System.
 After downloading scp_bts_P2-main.zip from Github, extract it to a location of your choice (exemple : "PATH").
 Or if you use git, clone it from https://github.com/ValentinPhB/scp_bts_P2.git
 
-If pip isn't installed :
-```
-$ sudo apt update
-$ sudo apt install python3-pip
-```
-
-If pip is already installed, create a virtual environment in "PATH" and install packages from requirements.txt.
+Create a virtual environment in "PATH" and install packages from requirements.txt.
 ```
 $ cd ../path/to/scp_bts_P2
 $ python3 -m venv env
