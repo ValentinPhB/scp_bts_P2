@@ -114,7 +114,7 @@ def transform_books_information(second_step, loc_images):
         r = requests.get(element)
         soup = BeautifulSoup(r.text, 'xml')
 
-        product_page_url.append(element)
+        product_page_url.append('=HYPERLINK("{}")'.format(element))
 
         upc.append(soup.select('table')[0].select('td')[0].string)
 
@@ -130,10 +130,10 @@ def transform_books_information(second_step, loc_images):
 
         category.append(soup.select('a')[3].text)
 
-        review_rating.append(soup.select('table')[0].select('td')[6].string)
+        review_rating.append(soup.select('p')[2]['class'].replace('star-rating ', ''))
 
         image_selector = ((soup.select("img")[0]["src"]).replace('../../', "http://books.toscrape.com/"))
-        image_url.append(image_selector)
+        image_url.append('=HYPERLINK("{}")'.format(image_selector))
 
         image = wget.download(image_selector, loc_images, bar=None)
         image_loc.append(image)
