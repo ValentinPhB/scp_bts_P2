@@ -1,4 +1,4 @@
-# scraping_bts
+# scraping_bts BETA VERSION
 ## Table of contents
 
 * [General info]
@@ -26,8 +26,6 @@ Project is created with Python 3.8.6.
 * six==1.15.0
 * soupsieve==2.2
 * urllib3==1.26.3
-* wget==3.2
-
 
 ## General info 
 
