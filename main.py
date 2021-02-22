@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 import os
 import requests
 import shutil
-import wget
 import pandas as pd
 from progress.bar import IncrementalBar
 
