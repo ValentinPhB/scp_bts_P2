@@ -2,10 +2,11 @@
 
 from bs4 import BeautifulSoup
 import os
-import requests
-import shutil
 import pandas as pd
 from progress.bar import IncrementalBar
+import requests
+import shutil
+import urllib.request
 
 
 def create_directory(directory_name):
@@ -39,7 +40,7 @@ def extract_category_list():
     for a in step_one:
         if a.text:
             step_two = 'http://books.toscrape.com/{}'.format(a['href'].replace('index.html', ''))
-            url_categories.append(step_two)
+            url_categories .append(step_two)
     del url_categories[0]
     return url_categories
 
@@ -117,6 +118,8 @@ def transform_books_information(second_step, loc_images):
 
         upc.append(soup.select('table')[0].select('td')[0].string)
 
+        title_bk2 = soup.select("h1")[0].string.replace('/', '_')
+        title_bk = '{}{}'.format(title_bk2, '.jpg')
         title.append(soup.select("h1")[0].string)
 
         price_including_tax.append(soup.select('table')[0].select('td')[3].string)
@@ -131,15 +134,16 @@ def transform_books_information(second_step, loc_images):
 
         review_rating.append(soup.select('p')[2]['class'].replace('star-rating ', ''))
 
-        image_selector = ((soup.select("img")[0]["src"]).replace('../../', "http://books.toscrape.com/"))
-        image_url.append('=HYPERLINK("{}")'.format(image_selector))
+        image_url_variable = ((soup.select("img")[0]["src"]).replace('../../', "http://books.toscrape.com/"))
+        image_url.append('=HYPERLINK("{}")'.format(image_url_variable))
+        image_file = os.path.join(loc_images, title_bk)
+        urllib.request.urlretrieve(image_url_variable, image_file)
 
-        image = wget.download(image_selector, loc_images, bar=None)
-        image_loc.append(image)
+        image_loc.append(image_file)
 
     data = {"product_page_url": product_page_url, "title": title, "upc": upc,
             "price_including_tax": price_including_tax, "price_excluding_tax": price_excluding_tax, "number_available":
-                number_available, "category": category, "review_rating": review_rating, "image_url": image_url,
+            number_available, "category": category, "review_rating": review_rating, "image_url": image_url,
             "product_description": product_description, "image_loc": image_loc}
 
     return data
