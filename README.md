@@ -1,11 +1,13 @@
 # scraping_bts BETA VERSION
 ## Table of contents
 
-* [General info]
 * [Technologies]
+* [General info]
+* [Installation Python 3.8.6]
 * [Setup for Unix]
 * [Setup for Windows]
-* [Load data]
+* [Open data]
+* [Author]
 
 ## Technologies
 
@@ -53,8 +55,10 @@ image_url
 image_localisation
 
 
-Please see the appropriate guide for your operating System.
+## Installation Python 3.8.6
 
+First download Python.exe from Python.org for the 3.8.6 Python version and execute it. 
+After installing Python 3.8.6 please see the appropriate guide for your operating System.
 
 ## a. Setup for Unix 
 
@@ -94,7 +98,7 @@ $ pip install -r requirements.txt
 $ ENV\Scripts\python.exe main.py
 ```
 
-## Load Data
+## Open Data
 ### With Microsoft Excel
 
 * Open Microsoft Excel
@@ -119,6 +123,8 @@ $ ENV\Scripts\python.exe main.py
 * Choose your CSV file from your Documents or Desktop folder.
 * in the following window, Choose “Import data.”
 
+## Author
 
+Valentin Pheulpin
 
 
