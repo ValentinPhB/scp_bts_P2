@@ -3,7 +3,7 @@
 
 1. [Technologies](#1-technologies)
 2. [General info](#2-general-info)
-3. [Installation Python 3.8.6](#3-installation-python-3-8-6)
+3. [Installation Python](#3-installation-python)
 4. [Setup](#4-setup)
 	- [Setup for Unix](#a-setup-for-unix)
  	- [Setup for Windows](#b-setup-for-windows)
@@ -56,7 +56,9 @@ image_url
 image_localisation
 
 
-## 3. Installation Python 3.8.6
+## 3. Installation Python
+
+Project is created with Python 3.8.6.
 
 First download Python.exe from Python.org for the 3.8.6 Python version and execute it. 
 After installing Python 3.8.6 please see the appropriate guide for your operating System.
