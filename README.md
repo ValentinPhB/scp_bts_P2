@@ -3,7 +3,7 @@
 
 1. [Technologies](#1-technologies)
 2. [General info](#2-general-info)
-3. [Installation Python 3.8.6](#3-installation-python-3.8.6)
+3. [Installation Python 3.8.6](#3-installation-python-3-8-6)
 4. [Setup](#4-setup)
 	- [Setup for Unix](#a-setup-for-unix)
  	- [Setup for Windows](#b-setup-for-windows)
