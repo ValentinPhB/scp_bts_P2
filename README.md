@@ -43,17 +43,17 @@ It will also download all images and redirect it to "images_bts".
 
 The informations collected are :
 
-product_page_url
-universal_ product_code (upc)
-title
-price_including_tax
-price_excluding_tax
-number_available
-product_description
-category
-review_rating
-image_url
-image_localisation
+* product_page_url
+* universal_ product_code (upc)
+* title
+* price_including_tax
+* price_excluding_tax
+* number_available
+* product_description
+* category
+* review_rating
+* image_url
+* image_localisation
 
 
 ## 3. Installation Python
