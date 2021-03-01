@@ -2,7 +2,7 @@
 ## Table of contents
 
 1. [Technologies](#1-technologies)
-2. [General info](#2-general-info)
+2. [General information](#2-general-information)
 3. [Installation Python](#3-installation-python)
 4. [Setup](#4-setup)
 	- [Setup for Unix](#a-setup-for-unix)
@@ -30,7 +30,7 @@ Project is created with Python 3.8.6.
 - soupsieve==2.2
 - urllib3==1.26.3
 
-## 2. General info
+## 2. General information
 
 scraping_bts contain 'main.py', a Python script to collect information from the web site "Books to scrape" (bts).
 
