@@ -118,8 +118,10 @@ def transform_books_information(second_step, loc_images):
 
         upc.append(soup.select('table')[0].select('td')[0].string)
 
-        title_bk2 = soup.select("h1")[0].string.replace('/', '_')
+        title_bk2 = soup.select("h1")[0].string.replace('"', '').replace(':', '')\
+            .replace('/', '').replace('...', '.').replace('*', '_').replace('?', '.').replace('|', '')
         title_bk = '{}{}'.format(title_bk2, '.jpg')
+
         title.append(soup.select("h1")[0].string)
 
         price_including_tax.append(soup.select('table')[0].select('td')[3].string)
