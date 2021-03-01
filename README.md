@@ -91,7 +91,7 @@ Or if you use git, clone it from https://github.com/ValentinPhB/scp_bts_P2.git
 Then, using cmd, go to "PATH", create a virtual environment and install packages from requirements.txt.
 ```
 $ CD ../path/to/scp_bts_P2
-$ python3 -m venv env
+$ py -m venv env
 $ env\Scripts\activate.bat
 $ py -m pip install -U pip
 $ pip install -r requirements.txt
