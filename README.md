@@ -60,8 +60,8 @@ image_localisation
 
 Project is created with Python 3.8.6.
 
-First download Python.exe from https://www.python.org/downloads/ for the 3.8.6 Python version and execute it. 
-After installing Python 3.8.6 please see the appropriate guide for your operating System.
+First download Python.exe from https://www.python.org/downloads/ for the 3.8.6 Python version __or above__ and execute it. 
+After installing Python.exe please see the appropriate guide for your operating System.
 
 ## 4. Setup
 ### A) *Setup for Unix*
