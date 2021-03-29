@@ -27,7 +27,7 @@ def create_directory(directory_name):
 
 def extract_category_list():
     """
-    Description: This function extract all categories URLs.
+    Description: This function extract all categories URLs .
     :return: "extract_url" as a list. It contain all categories URLs without "index.html". They will be tested by
     extract_books_url(first_step). "extract_url" is default named "step_1" from main().
     """
@@ -65,7 +65,7 @@ def create_books_url_list(rep, list_url):
 
 def extract_books_url(first_step):
     """
-    Description: This function will test all URLs contained in step_1 to know if category contains more than one page
+    Description: This function will test all URLs contained in step_1 to know if category contains more than one root
     (more than 20 books).
     :param first_step: This parameter is returned by extract_category_list(). Default named "step_1" from main().
     :return: "list_books" as a list. It contains all urls books of first_step[0]. Default named "step_2" from main().
@@ -73,7 +73,7 @@ def extract_books_url(first_step):
     if first_step[0]:
         j = 1
         number_page = str(j)
-        url = '{}{}{}{}'.format(first_step[0], 'page-', number_page, '.html')
+        url = '{}{}{}{}'.format(first_step[0], 'root-', number_page, '.html')
         r = requests.get(url)
         list_books = []
         if r:
@@ -81,7 +81,7 @@ def extract_books_url(first_step):
                 list_books = create_books_url_list(r, list_books)
                 j += 1
                 number_page = str(j)
-                url = '{}{}{}{}'.format(first_step[0], 'page-', number_page, '.html')
+                url = '{}{}{}{}'.format(first_step[0], 'root-', number_page, '.html')
                 r = requests.get(url)
         else:
             url = '{}{}'.format(first_step[0], 'index.html')
